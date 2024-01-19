@@ -28,7 +28,7 @@ function Login() {
         console.log(data)
         localStorage.setItem("trpc_cred",JSON.stringify(data.token))
         handleNavigate("/products")
-        toast.success("registered Successfully");
+        toast.success("Login Successfully");
       }
     } catch (error) {
       toast.error("something went wrong")

@@ -2,6 +2,7 @@ import { Formik, Form, Field } from "formik";
 import { client } from "../../client";
 import * as Yup from "yup";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface signupFromValues {
   name: string;
@@ -19,6 +20,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 function Signup() {
+  const handleNavigate = useNavigate();
   const initialValues: signupFromValues = { name: "", email: "", password: "" };
 
   const handleSubmit = async ({
@@ -28,12 +30,13 @@ function Signup() {
   }) => {
     try {
       const data = await client.user.signup.mutate(inputdata);
-      if(data){
-        console.log(data.token)
+      if (data) {
+        localStorage.setItem("trpc_cred", JSON.stringify(data.token));
+        handleNavigate("/products");
         toast.success("registered Successfully");
       }
     } catch (error) {
-      toast.error("something went wrong")
+      toast.error("something went wrong");
     }
   };
 
