@@ -1,10 +1,10 @@
-import { router , publicProcedure, privateProcedure } from "../trpc"
+import { router, publicProcedure, privateProcedure } from "../trpc"
 import { prisma } from "../dbclient"
 import { z } from "zod"
 import { isAdmin } from "../utils/adminHelper"
-import {TRPCError} from "@trpc/server"
-
-
+import { TRPCError } from "@trpc/server"
+import { params } from "../schema/product.schema"
+import { deleteProductHandler} from "../controllers/product.controller"
 const productSelect = {
     id: true,
     product_name: true,
@@ -20,24 +20,26 @@ export const productRouter = router({
     }),
     create: privateProcedure.input(z.object({
         product_name: z.string(),
-        price : z.number().gt(0),
-        image_url : z.string().default(""),
-        quantity : z.number().gt(0)
+        price: z.number().gt(0),
+        image_url: z.string().default(""),
+        quantity: z.number().gt(0)
     }))
-    .mutation(async({ctx,input})=>{
-        const isAdminTrue = await isAdmin(ctx.req.headers.authorization?.split(' ')[1])
-        if(isAdminTrue){
-            return await prisma.product.create({
-                data : input,
-                select: productSelect,
-            })
-        }
-        else {
-            throw new TRPCError({
-                code : "UNAUTHORIZED"
-            })
-        }
-        
-         
-    })
+        .mutation(async ({ ctx, input }) => {
+            const isAdminTrue = await isAdmin(ctx.req.headers.authorization?.split(' ')[1])
+            if (isAdminTrue) {
+                return await prisma.product.create({
+                    data: input,
+                    select: productSelect,
+                })
+            }
+            else {
+                throw new TRPCError({
+                    code: "UNAUTHORIZED"
+                })
+            }
+
+
+        }),
+    delete: privateProcedure.input(params)
+        .mutation(({ input}) => deleteProductHandler({paramsInput : input}))
 })

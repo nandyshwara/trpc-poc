@@ -16,7 +16,7 @@ export const userRouter = router({
         name: z.string().min(5),
         email: z.string().email(),
         password: z.string(),
-        role: z.enum(["ADMIN", "USER"]).default("ADMIN"),
+        role: z.enum(["ADMIN", "USER"]).default("USER"),
     }),
     )
         .mutation(async ({ ctx , input }) => {

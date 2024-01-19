@@ -27,7 +27,7 @@ model Product {
   price        Int
   image_url    String
   quantity     Int
-  Order        Order[]
+  orders       Order[] @relation("productOrders")
 }
 
 model Order {
@@ -35,6 +35,8 @@ model Order {
   user_id    String
   user       User    @relation(fields: [user_id], references: [id])
   product_id String
-  product    Product @relation(fields: [product_id], references: [id])
-  quantity Int
+  product    Product @relation(fields: [product_id], references: [id], onDelete: Cascade, name: "productOrders")
+  quantity   Int
+
+  @@index([product_id], name: "Order_product_id_index")
 }

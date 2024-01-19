@@ -24,15 +24,17 @@ function AllProducts() {
 
   return (
     <div className="text-8xl">
-      <div className="w-10/12 mx-auto">
+      <div className="w-full mx-auto">
         {productsData ? (
-          <div className="flex flex-row gap-5">
+          <div className="w-11/12 flex flex-wrap mx-auto gap-5">
             {productsData.map((currEle: ProductData) => (
-              <ProductCard
-                key={currEle.id}
-                className="basis-1/4 text-2xl bg-[#0B60B0] px-5 py-5 rounded-xl shadow-2xl"
-                data={currEle}
-              />
+              <div className="w-[300px]">
+                <ProductCard
+                  key={currEle.id}
+                  className="h-[400px] text-2xl bg-[#3198e7bf] px-5 py-5 rounded-xl shadow-2xl"
+                  data={currEle}
+                />
+              </div>
             ))}
           </div>
         ) : (
