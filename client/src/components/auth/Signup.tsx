@@ -43,7 +43,7 @@ function Signup() {
   return (
     <div className="my-10 flex flex-col gap-y-5">
       <p className="mx-auto text-3xl font-bold">Signup Form</p>
-      <div className="w-6/12 mx-auto bg-[#3198e7bf] py-10 px-5 rounded-xl">
+      <div className="w-2/5 mx-auto bg-[#3198e7bf] py-10 px-5 rounded-xl">
         <Formik
           initialValues={initialValues}
           validationSchema={SignupSchema}
@@ -57,7 +57,7 @@ function Signup() {
                 <div className="my-5 flex flex-col">
                   <label htmlFor="name">Name</label>
                   <Field
-                    className="mt-2 rounded-md"
+                    className="p-2 mt-2 rounded-md"
                     id="name"
                     name="name"
                     placeholder="Name"
@@ -69,7 +69,7 @@ function Signup() {
                 <div className="my-5 flex flex-col">
                   <label htmlFor="email">Email</label>
                   <Field
-                    className="mt-2 rounded-md"
+                    className="p-2 mt-2 rounded-md"
                     id="email"
                     name="email"
                     placeholder="Email"
@@ -81,7 +81,7 @@ function Signup() {
                 <div className="my-5 flex flex-col">
                   <label htmlFor="password">Password</label>
                   <Field
-                    className="mt-2 rounded-md"
+                    className="p-2 mt-2 rounded-md"
                     id="password"
                     name="password"
                     placeholder="Password"
