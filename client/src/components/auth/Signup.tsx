@@ -1,8 +1,10 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { client } from "../../client";
 import * as Yup from "yup";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import TextInput from "./TextInput";
+
 
 interface signupFromValues {
   name: string;
@@ -51,54 +53,38 @@ function Signup() {
             handleSubmit({ inputdata: values });
           }}
         >
-          {({ errors, touched }) => (
-            <Form>
-              <div className="flex flex-col text-xl font-semibold">
-                <div className="my-5 flex flex-col">
-                  <label htmlFor="name">Name</label>
-                  <Field
-                    className="p-2 mt-2 rounded-md"
-                    id="name"
-                    name="name"
-                    placeholder="Name"
-                  />
-                  {errors.name && touched.name ? (
-                    <div>{errors.name}</div>
-                  ) : null}
-                </div>
-                <div className="my-5 flex flex-col">
-                  <label htmlFor="email">Email</label>
-                  <Field
-                    className="p-2 mt-2 rounded-md"
-                    id="email"
-                    name="email"
-                    placeholder="Email"
-                  />
-                  {errors.email && touched.email ? (
-                    <div>{errors.email}</div>
-                  ) : null}
-                </div>
-                <div className="my-5 flex flex-col">
-                  <label htmlFor="password">Password</label>
-                  <Field
-                    className="p-2 mt-2 rounded-md"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-                  />
-                  {errors.password && touched.password ? (
-                    <div>{errors.password}</div>
-                  ) : null}
-                </div>
-                <button
-                  className="bg-white rounded-xl w-1/2 mx-auto mt-10 text-xl font-bold py-2"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </div>
-            </Form>
-          )}
+          <Form>
+            <div className="flex flex-col text-xl font-semibold">
+              <TextInput
+                className="p-2 mt-2 rounded-md"
+                name="name"
+                id="name"
+                placeholder="Name"
+              />
+              <ErrorMessage name="name" component="p" />
+              <TextInput name="gender" options={["male","female"]} inputType="select" />
+              <TextInput
+                className="p-2 mt-2 rounded-md"
+                name="email"
+                id="email"
+                placeholder="Email"
+              />
+              <ErrorMessage name="email" component="p" />
+              <TextInput
+                className="p-2 mt-2 rounded-md"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <ErrorMessage name="password" component="p" />
+              <button
+                className="bg-white rounded-xl w-1/2 mx-auto mt-10 text-xl font-bold py-2"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </Form>
         </Formik>
       </div>
     </div>
