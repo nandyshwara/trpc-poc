@@ -2,6 +2,9 @@ import { router ,publicProcedure} from "../trpc";
 import { z } from "zod"
 import { prisma } from "../dbclient";
 import jwt from "jsonwebtoken"
+import {getByIdParams, loginParams} from "../schema/user.schema"
+import {getAllUsersHandler, getUserByIdHandler, loginHandler} from "../controllers/user.controller"
+
 const selectUserDetails = {
     id: true,
     name: true,
@@ -21,7 +24,6 @@ export const userRouter = router({
     )
         .mutation(async ({ ctx , input }) => {
             console.log("request" , ctx.req)
-            // console.log(ctx.res)
             const users = await prisma.user.create({
                 data: input,
                 select: selectUserDetails,
@@ -34,34 +36,16 @@ export const userRouter = router({
                 token: token
             }
         }),
-    login: publicProcedure.input(z.object({
-        email: z.string().email(),
-        password: z.string(),
-    })).mutation(async ({ input }) => {
-        const user = await prisma.user.findUnique({
-            where: {
-                email: input.email,
-            }
-        })
-        // if (!user) {
-        //     throw TRPCError
-        // }
-        const token = jwt.sign({ userId: user?.id }, JWT_SECRET, {
-            expiresIn: "24h",
-        });
-        return { user: user, token: token }
+    login: publicProcedure.input(loginParams).mutation(async ({input}) => {
+       return loginHandler({inputData : input})
 
     }),
     getAll: publicProcedure.query(() => {
-        return prisma.user.findMany();
+        return getAllUsersHandler();
     }),
 
-    getById: publicProcedure.input(z.object({ user_id: z.string() })).query(async ({  input }) => {
-        return await prisma.user.findUnique({
-            where: {
-                id: input.user_id
-            }
-        })
-    })
+    getById: publicProcedure.input(getByIdParams).mutation(async ({input}) => {
+        return getUserByIdHandler({inputData : input})
+     }),
 
 })
