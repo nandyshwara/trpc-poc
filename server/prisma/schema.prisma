@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgres://drbihzwq:e_lHSABjr_o1XXmC8UmhUjO4AODirKPE@snuffleupagus.db.elephantsql.com/drbihzwq"
+  url      = "postgres://evbqdgcc:RgrXoQQs8SK8i_A-Gz96_8s72qCfzcX8@hattie.db.elephantsql.com/evbqdgcc"
 }
 
 generator client {

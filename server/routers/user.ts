@@ -53,7 +53,7 @@ export const userRouter = router({
 
     }),
     getAll: publicProcedure.query(() => {
-        return prisma.user.findMany({ select: selectUserDetails });
+        return prisma.user.findMany();
     }),
 
     getById: publicProcedure.input(z.object({ user_id: z.string() })).query(async ({  input }) => {

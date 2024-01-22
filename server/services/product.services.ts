@@ -1,4 +1,5 @@
 import { prisma } from "../dbclient"
+import { createProductParamsInput } from "../schema/product.schema";
 
 export const deleteProduct = async (
     product_id: string
@@ -11,3 +12,16 @@ export const deleteProduct = async (
         },
     })
 };
+
+export const createProduct = async (
+    inputData: createProductParamsInput
+) => {
+    return prisma.product.create({
+        data : inputData,
+    })
+};
+
+export const getAllProducts = async() =>{
+    const data = await prisma.product.findMany()
+    return data
+}

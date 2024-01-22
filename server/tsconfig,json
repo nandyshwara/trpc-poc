@@ -1,3 +1,6 @@
 {
-  "strictNullChecks": true
+  "strictNullChecks": true,
+  "paths": {
+    "trpc-panel": ["path/to/trpc-panel"]
+  }
 }
